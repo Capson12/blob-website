@@ -78,3 +78,4 @@ resource "azurerm_cdn_frontdoor_security_policy" "main_security_policy" {
     }
   }
 }
+
