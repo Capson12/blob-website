@@ -22,6 +22,9 @@ resource "azurerm_cdn_frontdoor_origin_group" "main_origin_group" {
 }
 
 resource "azurerm_cdn_frontdoor_origin" "main_origin" {
+
+  depends_on = [ azurerm_cdn_frontdoor_origin_group.main_origin_group ]
+
   name                           = var.main_origin_name
   cdn_frontdoor_origin_group_id  = azurerm_cdn_frontdoor_origin_group.main_origin_group.id
   host_name                      = var.main_origin_host_name
