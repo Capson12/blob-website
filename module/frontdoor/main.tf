@@ -46,7 +46,8 @@ resource "azurerm_cdn_frontdoor_route" "main_route" {
 
   depends_on = [ 
     azurerm_cdn_frontdoor_origin.main_origin,
-    azurerm_cdn_frontdoor_custom_domain.main_custom_domain
+    azurerm_cdn_frontdoor_custom_domain.main_custom_domain, 
+    azurerm_cdn_frontdoor_origin_group.main_origin_group
    ]
   name                          = var.main_route_name
   cdn_frontdoor_endpoint_id     = azurerm_cdn_frontdoor_endpoint.main_endpoint.id
