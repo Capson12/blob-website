@@ -29,6 +29,15 @@ resource "azurerm_cdn_frontdoor_origin" "main_origin" {
   cdn_frontdoor_origin_group_id  = azurerm_cdn_frontdoor_origin_group.main_origin_group.id
   host_name                      = var.main_origin_host_name
   certificate_name_check_enabled = var.certificate_name_check_enabled
+
+  enabled = true
+
+  # http_port  = 80
+  # https_port = 443
+
+  # priority = 1
+  # weight   = 1000
+
 }
 
 resource "azurerm_cdn_frontdoor_custom_domain" "main_custom_domain" {
