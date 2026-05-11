@@ -42,7 +42,7 @@ resource "azurerm_cdn_frontdoor_custom_domain" "main_custom_domain" {
 resource "azurerm_cdn_frontdoor_route" "main_route" {
 
   depends_on = [ 
-    azurerm_cdn_frontdoor_origin.main_origin.main_origin,
+    azurerm_cdn_frontdoor_origin.main_origin,
     azuazurerm_cdn_frontdoor_custom_domain.main_custom_domain
    ]
   name                          = var.main_route_name
