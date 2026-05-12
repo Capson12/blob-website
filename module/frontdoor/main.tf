@@ -97,3 +97,12 @@ resource "azurerm_cdn_frontdoor_security_policy" "main_security_policy" {
   }
 }
 
+# For www.yourdomain.com
+resource "azurerm_dns_cname_record" "www" {
+  name                = "www"
+  zone_name           = azurerm_dns_zone.main_dns_zone.name
+  resource_group_name = var.resource_group_name
+  ttl                 = 300
+  record              = azurerm_cdn_frontdoor_endpoint.main_endpoint.host_name
+}
+
