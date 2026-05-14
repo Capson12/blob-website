@@ -101,3 +101,8 @@ variable "resource_group_name" {
     description = "value"
     type =  string  
 }
+
+variable "frontdoor_custom_domain_name" {
+  description = "value"
+  type = string
+}
