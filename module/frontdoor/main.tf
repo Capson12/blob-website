@@ -32,11 +32,11 @@ resource "azurerm_cdn_frontdoor_origin" "main_origin" {
 
   enabled = true
 
-  # http_port  = 80
-  # https_port = 443
+  http_port  = 80
+  https_port = 443
 
-  # priority = 1
-  # weight   = 1000
+  priority = 1
+  weight   = 1000
 
 }
 
@@ -46,7 +46,7 @@ resource "azurerm_cdn_frontdoor_custom_domain" "main_custom_domain" {
   dns_zone_id              = azurerm_dns_zone.main_dns_zone.id
   host_name                = azurerm_cdn_frontdoor_origin.main_origin.host_name
 
-  tls {
+  tls { 
     certificate_type = var.certificate_type
   }
 }
