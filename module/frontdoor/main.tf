@@ -30,6 +30,8 @@ resource "azurerm_cdn_frontdoor_origin" "main_origin" {
   host_name                      = var.main_origin_host_name
   certificate_name_check_enabled = var.certificate_name_check_enabled
 
+  origin_host_header = var.main_origin_host_name
+
   enabled = true
 
   http_port  = 80
