@@ -29,8 +29,7 @@ resource "azurerm_cdn_frontdoor_origin" "main_origin" {
   cdn_frontdoor_origin_group_id  = azurerm_cdn_frontdoor_origin_group.main_origin_group.id
   host_name                      = var.main_origin_host_name
   certificate_name_check_enabled = var.certificate_name_check_enabled
-
-  origin_host_header = var.main_origin_host_name
+  origin_host_header             = var.main_origin_host_name
 
   enabled = true
 
@@ -52,24 +51,38 @@ resource "azurerm_cdn_frontdoor_custom_domain" "main_custom_domain" {
   }
 }
 
+resource "azurerm_cdn_frontdoor_custom_domain" "www_domain" {
+  name                     = "www-domain"
+  cdn_frontdoor_profile_id = azurerm_cdn_frontdoor_profile.main_profile.id
+  dns_zone_id = azurerm_dns_zone.main_dns_zone.id
+  host_name = "www.symtex.dev"
+
+  tls {
+    certificate_type = "ManagedCertificate"
+  }
+}
+
 resource "azurerm_cdn_frontdoor_route" "main_route" {
 
-  depends_on = [ 
-    azurerm_cdn_frontdoor_origin.main_origin,
-    azurerm_cdn_frontdoor_custom_domain.main_custom_domain, 
-    azurerm_cdn_frontdoor_origin_group.main_origin_group
-   ]
   name                          = var.main_route_name
   cdn_frontdoor_endpoint_id     = azurerm_cdn_frontdoor_endpoint.main_endpoint.id
   cdn_frontdoor_origin_group_id = azurerm_cdn_frontdoor_origin_group.main_origin_group.id
-  cdn_frontdoor_origin_ids      = [azurerm_cdn_frontdoor_origin.main_origin.id]
 
-  cdn_frontdoor_custom_domain_ids = [
-    azurerm_cdn_frontdoor_custom_domain.main_custom_domain.id,
+  cdn_frontdoor_origin_ids = [
+    azurerm_cdn_frontdoor_origin.main_origin.id
   ]
 
-  patterns_to_match   = var.patterns_to_match
-  supported_protocols = var.supported_protocols
+  cdn_frontdoor_custom_domain_ids = [
+    azurerm_cdn_frontdoor_custom_domain.root_domain.id,
+    azurerm_cdn_frontdoor_custom_domain.www_domain.id
+  ]
+
+  patterns_to_match   = ["/*"]
+  supported_protocols = ["Http", "Https"]
+  forwarding_protocol    = "HttpsOnly"
+  https_redirect_enabled = true
+  link_to_default_domain = true
+
 }
 
 resource "azurerm_cdn_frontdoor_firewall_policy" "main_firewall_policy" {
