@@ -73,7 +73,7 @@ resource "azurerm_cdn_frontdoor_route" "main_route" {
   ]
 
   cdn_frontdoor_custom_domain_ids = [
-    azurerm_cdn_frontdoor_custom_domain.root_domain.id,
+    azurerm_cdn_frontdoor_custom_domain.main_custom_domain.id,
     azurerm_cdn_frontdoor_custom_domain.www_domain.id
   ]
 
