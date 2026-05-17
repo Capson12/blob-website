@@ -52,13 +52,15 @@ resource "azurerm_cdn_frontdoor_custom_domain" "main_custom_domain" {
 }
 
 resource "azurerm_cdn_frontdoor_custom_domain" "www_domain" {
-  name                     = "www-domain"
-  cdn_frontdoor_profile_id = azurerm_cdn_frontdoor_profile.main_profile.id
-  dns_zone_id = azurerm_dns_zone.main_dns_zone.id
-  host_name = "www.symtex.dev"
+  for_each = { for d in var.additional_custom_domains : d.name => d }
+
+  name                      = each.value.name
+  cdn_frontdoor_profile_id  = azurerm_cdn_frontdoor_profile.main_profile.id
+  dns_zone_id               = azurerm_dns_zone.main_dns_zone.id
+  host_name                 = each.value.host_name
 
   tls {
-    certificate_type = "ManagedCertificate"
+    certificate_type = var.certificate_type
   }
 }
 
@@ -113,7 +115,8 @@ resource "azurerm_cdn_frontdoor_security_policy" "main_security_policy" {
 
 # For www.yourdomain.com
 resource "azurerm_dns_cname_record" "www" {
-  name                = "www"
+  for_each = { for r in var.additional_custom_domains : r.name => r }
+  name                = each.value.name
   zone_name           = azurerm_dns_zone.main_dns_zone.name
   resource_group_name = var.resource_group_name
   ttl                 = 300
