@@ -1,8 +1,3 @@
-output "dns_zone_id" {
-  description = "The ID of the DNS zone."
-  value       = azurerm_dns_zone.main_dns_zone.id
-}
-
 output "cdn_frontdoor_profile_id" {
   description = "The ID of the CDN Front Door profile."
   value       = azurerm_cdn_frontdoor_profile.main_profile.id
