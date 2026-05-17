@@ -51,7 +51,7 @@ resource "azurerm_cdn_frontdoor_custom_domain" "main_custom_domain" {
   }
 }
 
-resource "azurerm_cdn_frontdoor_custom_domain" "www_domain" {
+resource "azurerm_cdn_frontdoor_custom_domain" "additional_domains" {
   for_each = { for d in var.additional_custom_domains : d.name => d }
 
   name                      = each.value.name
@@ -114,7 +114,7 @@ resource "azurerm_cdn_frontdoor_security_policy" "main_security_policy" {
 }
 
 # For www.yourdomain.com
-resource "azurerm_dns_cname_record" "www" {
+resource "azurerm_dns_cname_record" "subdomain" {
   for_each = { for r in var.additional_custom_domains : r.name => r }
   name                = each.value.name
   zone_name           = azurerm_dns_zone.main_dns_zone.name
