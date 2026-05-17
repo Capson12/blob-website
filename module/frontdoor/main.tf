@@ -51,7 +51,7 @@ resource "azurerm_cdn_frontdoor_custom_domain" "additional_domains" {
 
   name                      = each.value.name
   cdn_frontdoor_profile_id  = azurerm_cdn_frontdoor_profile.main_profile.id
-  dns_zone_id               = azurerm_dns_zone.main_dns_zone.id
+  dns_zone_id               = var.dns_zone.id
   host_name                 = each.value.host_name
 
   tls {
