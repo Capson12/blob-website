@@ -76,7 +76,7 @@ resource "azurerm_cdn_frontdoor_route" "main_route" {
 
   cdn_frontdoor_custom_domain_ids = [
     azurerm_cdn_frontdoor_custom_domain.main_custom_domain.id,
-    azurerm_cdn_frontdoor_custom_domain.subdomain.id
+    azurerm_cdn_frontdoor_custom_domain.additional_domains.id
   ]
 
   patterns_to_match   = ["/*"]
