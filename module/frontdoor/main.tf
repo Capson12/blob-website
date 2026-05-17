@@ -74,10 +74,10 @@ resource "azurerm_cdn_frontdoor_route" "main_route" {
     azurerm_cdn_frontdoor_origin.main_origin.id
   ]
 
-  cdn_frontdoor_custom_domain_ids = [
-    azurerm_cdn_frontdoor_custom_domain.main_custom_domain.id,
-    azurerm_cdn_frontdoor_custom_domain.additional_domains.id
-  ]
+  cdn_frontdoor_custom_domain_ids = concat(
+    [azurerm_cdn_frontdoor_custom_domain.main_custom_domain.id],
+    [for d in azurerm_cdn_frontdoor_custom_domain.additional_domains : d.id]
+  )
 
   patterns_to_match   = ["/*"]
   supported_protocols = ["Http", "Https"]
