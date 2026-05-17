@@ -39,7 +39,7 @@ resource "azurerm_cdn_frontdoor_origin" "main_origin" {
 resource "azurerm_cdn_frontdoor_custom_domain" "main_custom_domain" {
   name                     = var.main_custom_domain_name
   cdn_frontdoor_profile_id = azurerm_cdn_frontdoor_profile.main_profile.id
-  dns_zone_id              = var.dns_zone.id
+  dns_zone_id              = var.dns_zone_id
   host_name                = var.dns_zone_name
   tls { 
     certificate_type = var.certificate_type
