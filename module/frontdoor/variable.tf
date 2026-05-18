@@ -105,9 +105,31 @@ variable "resource_group_name" {
 
 variable "dns_zone_id" {
   type = string
-  
 }
 
 variable "fd_dns_zone_name" {
-  type = string
+  description = "The host name for the main Front Door custom domain (e.g. dev.domain.com or domain.com)."
+  type        = string
+}
+
+variable "additional_custom_domains" {
+  description = "Extra custom domains to attach (e.g. www). Empty for dev."
+  type = list(object({
+    name      = string  # CDN resource name e.g. "www-domain"
+    host_name = string  # FQDN e.g. "www.domain.com"
+    subdomain = string  # DNS record prefix e.g. "www"
+  }))
+  default = []
+}
+
+variable "apex_cname_name" {
+  description = "Subdomain name to create a CNAME record for, pointing to the Front Door endpoint (e.g. 'dev'). Set to null to skip."
+  type        = string
+  default     = null
+}
+
+variable "create_apex_alias" {
+  description = "Whether to create an apex alias A record (@) pointing to the Front Door profile. Use for prod apex domain (domain.com)."
+  type        = bool
+  default     = false
 }

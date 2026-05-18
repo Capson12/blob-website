@@ -38,20 +38,4 @@ output "cdn_frontdoor_security_policy_id" {
   value       = azurerm_cdn_frontdoor_security_policy.main_security_policy.id
 }
 
-# variable.tf — new additions
-variable "additional_custom_domains" {
-  description = "Extra custom domains to attach (e.g. www). Empty for dev."
-  type = list(object({
-    name      = string
-    host_name = string
-  }))
-  default = []
-}
 
-variable "cname_records" {
-  description = "Subdomains to create CNAME records for (e.g. www). Empty for dev."
-  type = list(object({
-    name = string
-  }))
-  default = []
-}
