@@ -107,3 +107,7 @@ variable "dns_zone_id" {
   type = string
   
 }
+
+variable "fd_dns_zone_name" {
+  type = string
+}
