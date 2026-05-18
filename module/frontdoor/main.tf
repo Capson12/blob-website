@@ -112,7 +112,7 @@ resource "azurerm_dns_cname_record" "subdomain" {
   for_each = { for r in var.additional_custom_domains : r.name => r }
   name                = each.value.subdomain
   zone_name           = var.dns_zone_name
-  resource_group_name = var.resource_group_name
+  resource_group_name = var.dns_resource_group_name
   ttl                 = 300
   record              = azurerm_cdn_frontdoor_endpoint.main_endpoint.host_name
 }
@@ -122,7 +122,7 @@ resource "azurerm_dns_cname_record" "apex_cname" {
   count               = var.apex_cname_name != null ? 1 : 0
   name                = var.apex_cname_name
   zone_name           = var.dns_zone_name
-  resource_group_name = var.resource_group_name
+  resource_group_name = var.dns_resource_group_name
   ttl                 = 300
   record              = azurerm_cdn_frontdoor_endpoint.main_endpoint.host_name
 }
@@ -132,7 +132,7 @@ resource "azurerm_dns_a_record" "apex_alias" {
   count               = var.create_apex_alias ? 1 : 0
   name                = "@"
   zone_name           = var.dns_zone_name
-  resource_group_name = var.resource_group_name
+  resource_group_name = var.dns_resource_group_name
   ttl                 = 300
   records             = []
   target_resource_id  = azurerm_cdn_frontdoor_profile.main_profile.id

@@ -133,3 +133,8 @@ variable "create_apex_alias" {
   type        = bool
   default     = false
 }
+
+variable "dns_resource_group_name" {
+  type = string
+  
+}
