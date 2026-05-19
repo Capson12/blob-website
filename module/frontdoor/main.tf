@@ -129,11 +129,11 @@ resource "azurerm_dns_cname_record" "apex_cname" {
 
 # Prod: creates alias A record "@" → Front Door profile (required for apex domains)
 resource "azurerm_dns_a_record" "apex_alias" {
-  count               = var.create_apex_alias ? 1 : 0
-  name                = "@"
-  zone_name           = var.dns_zone_name
+  count              = var.create_apex_alias ? 1 : 0
+  name               = "@"
+  zone_name          = var.dns_zone_name
   resource_group_name = var.dns_resource_group_name
-  ttl                 = 300
-  target_resource_id  = azurerm_cdn_frontdoor_profile.main_profile.id
+  ttl                = 300
+  target_resource_id = azurerm_cdn_frontdoor_endpoint.main_endpoint.id  # endpoint, not profile
 }
 
