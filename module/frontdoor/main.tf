@@ -134,7 +134,6 @@ resource "azurerm_dns_a_record" "apex_alias" {
   zone_name           = var.dns_zone_name
   resource_group_name = var.dns_resource_group_name
   ttl                 = 300
-  records             = []
   target_resource_id  = azurerm_cdn_frontdoor_profile.main_profile.id
 }
 
