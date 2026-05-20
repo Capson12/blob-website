@@ -98,8 +98,14 @@ resource "azurerm_cdn_frontdoor_security_policy" "main_security_policy" {
       cdn_frontdoor_firewall_policy_id = azurerm_cdn_frontdoor_firewall_policy.main_firewall_policy.id
 
       association {
-        domain {
-          cdn_frontdoor_domain_id = azurerm_cdn_frontdoor_custom_domain.main_custom_domain.id
+        dynamic "domain" {
+          for_each = concat(
+            [azurerm_cdn_frontdoor_custom_domain.main_custom_domain.id],
+            [for d in azurerm_cdn_frontdoor_custom_domain.additional_domains : d.id]
+          )
+          content {
+            cdn_frontdoor_domain_id = domain.value
+          }
         }
 
         patterns_to_match = var.patterns_to_match
