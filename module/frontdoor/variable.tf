@@ -104,12 +104,14 @@ variable "resource_group_name" {
 
 
 variable "dns_zone_id" {
-  type = string
+  type    = string
+  default = null
 }
 
 variable "fd_dns_zone_name" {
   description = "The host name for the main Front Door custom domain (e.g. dev.domain.com or domain.com)."
   type        = string
+  default     = null
 }
 
 variable "additional_custom_domains" {
@@ -136,5 +138,6 @@ variable "create_apex_alias" {
 
 variable "dns_resource_group_name" {
   type = string
+  default = null
   
 }
