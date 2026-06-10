@@ -30,7 +30,7 @@ resource "azurerm_cdn_frontdoor_origin" "main_origin" {
 
   http_port  = 80
   https_port = 443
-
+ 
   priority = 1
   weight   = 1000
 
