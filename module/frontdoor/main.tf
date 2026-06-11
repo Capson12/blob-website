@@ -143,3 +143,24 @@ resource "azurerm_dns_a_record" "apex_alias" {
   target_resource_id = azurerm_cdn_frontdoor_endpoint.main_endpoint.id  # endpoint, not profile
 }
 
+
+resource "azurerm_monitor_diagnostic_setting" "frontdoor_monitor" {
+  name = "${var.prefix}-monitor-settings"
+  target_resource_id = azurerm_cdn_frontdoor_profile.main_profile.id
+  log_analytics_workspace_id = var.log_analytics_workspace_id
+
+  enabled_log {
+    category = "FrontdoorAccessLog"
+  }
+
+  enabled_log {
+    category = "FrontdoorWebApplicationFirewallLog"
+  }
+
+  enabled_metric {
+    category = "AllMetrics"
+  }
+  
+  
+}
+

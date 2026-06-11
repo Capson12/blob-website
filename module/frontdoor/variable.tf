@@ -142,3 +142,14 @@ variable "dns_resource_group_name" {
   default = null
   
 }
+
+variable "log_analytics_workspace_id" {
+  type = string
+  description = "value"
+  
+}
+
+variable "prefix" {
+  type = string
+  
+}
