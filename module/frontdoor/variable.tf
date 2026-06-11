@@ -143,7 +143,7 @@ variable "dns_resource_group_name" {
   
 }
 
-variable "log_analytics_workspace_id" {
+variable "workspace_id" {
   type = string
   description = "value"
   
