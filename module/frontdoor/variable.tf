@@ -157,4 +157,5 @@ variable "log_analytics_workspace_id" {
 
 variable "prefix" {
   type = string
+  default = null
 }
