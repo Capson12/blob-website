@@ -143,13 +143,18 @@ variable "dns_resource_group_name" {
   
 }
 
-variable "workspace_id" {
-  type = string
-  description = "value"
-  
+variable "enable_diagnostics" {
+  description = "Whether to enable the Front Door diagnostic setting."
+  type        = bool
+  default     = false
+}
+
+variable "log_analytics_workspace_id" {
+  description = "The resource ID of the Log Analytics workspace to send diagnostics to. Required when enable_diagnostics is true."
+  type        = string
+  default     = null
 }
 
 variable "prefix" {
   type = string
-  
 }

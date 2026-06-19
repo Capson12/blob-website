@@ -145,9 +145,11 @@ resource "azurerm_dns_a_record" "apex_alias" {
 
 
 resource "azurerm_monitor_diagnostic_setting" "frontdoor_monitor" {
-  name = "${var.prefix}-monitor-settings"
-  target_resource_id = azurerm_cdn_frontdoor_profile.main_profile.id
-  log_analytics_workspace_id = var.workspace_id
+  count = var.enable_diagnostics ? 1 : 0
+
+  name                       = "${var.prefix}-monitor-settings"
+  target_resource_id         = azurerm_cdn_frontdoor_profile.main_profile.id
+  log_analytics_workspace_id = var.log_analytics_workspace_id
 
   enabled_log {
     category = "FrontdoorAccessLog"
@@ -160,7 +162,5 @@ resource "azurerm_monitor_diagnostic_setting" "frontdoor_monitor" {
   metric {
     category = "AllMetrics"
   }
-  
-  
 }
 
