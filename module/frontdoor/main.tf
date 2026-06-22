@@ -1,14 +1,23 @@
+############################################################
+# Resource: azurerm_cdn_frontdoor_profile.main_profile
+############################################################
 resource "azurerm_cdn_frontdoor_profile" "main_profile" {
   name                = var.main_profile_name
   resource_group_name = var.resource_group_name
   sku_name            = var.main_profile_sku
 }
 
+############################################################
+# Resource: azurerm_cdn_frontdoor_endpoint.main_endpoint
+############################################################
 resource "azurerm_cdn_frontdoor_endpoint" "main_endpoint" {
   name                     = var.main_endpoint_name
   cdn_frontdoor_profile_id = azurerm_cdn_frontdoor_profile.main_profile.id
 }
 
+############################################################
+# Resource: azurerm_cdn_frontdoor_origin_group.main_origin_group
+############################################################
 resource "azurerm_cdn_frontdoor_origin_group" "main_origin_group" {
   name                     = var.main_origin_group_name
   cdn_frontdoor_profile_id = azurerm_cdn_frontdoor_profile.main_profile.id
@@ -16,6 +25,9 @@ resource "azurerm_cdn_frontdoor_origin_group" "main_origin_group" {
   load_balancing {}
 }
 
+############################################################
+# Resource: azurerm_cdn_frontdoor_origin.main_origin
+############################################################
 resource "azurerm_cdn_frontdoor_origin" "main_origin" {
 
   depends_on = [ azurerm_cdn_frontdoor_origin_group.main_origin_group ]
@@ -36,6 +48,9 @@ resource "azurerm_cdn_frontdoor_origin" "main_origin" {
 
 }
 
+############################################################
+# Resource: azurerm_cdn_frontdoor_custom_domain.main_custom_domain
+############################################################
 resource "azurerm_cdn_frontdoor_custom_domain" "main_custom_domain" {
   name                     = var.main_custom_domain_name
   cdn_frontdoor_profile_id = azurerm_cdn_frontdoor_profile.main_profile.id
@@ -46,6 +61,9 @@ resource "azurerm_cdn_frontdoor_custom_domain" "main_custom_domain" {
   }
 }
 
+############################################################
+# Resource: azurerm_cdn_frontdoor_custom_domain.additional_domains
+############################################################
 resource "azurerm_cdn_frontdoor_custom_domain" "additional_domains" {
   for_each = { for d in var.additional_custom_domains : d.name => d }
 
@@ -59,6 +77,9 @@ resource "azurerm_cdn_frontdoor_custom_domain" "additional_domains" {
   }
 }
 
+############################################################
+# Resource: azurerm_cdn_frontdoor_route.main_route
+############################################################
 resource "azurerm_cdn_frontdoor_route" "main_route" {
 
   name                          = var.main_route_name
@@ -82,6 +103,9 @@ resource "azurerm_cdn_frontdoor_route" "main_route" {
 
 }
 
+############################################################
+# Resource: azurerm_cdn_frontdoor_firewall_policy.main_firewall_policy
+############################################################
 resource "azurerm_cdn_frontdoor_firewall_policy" "main_firewall_policy" {
   name                = var.main_firewall_policy_name
   resource_group_name = var.resource_group_name
@@ -89,6 +113,9 @@ resource "azurerm_cdn_frontdoor_firewall_policy" "main_firewall_policy" {
   mode                = var.firewall_policy_mode
 }
 
+############################################################
+# Resource: azurerm_cdn_frontdoor_security_policy.main_security_policy
+############################################################
 resource "azurerm_cdn_frontdoor_security_policy" "main_security_policy" {
   name                     = var.main_security_policy_name
   cdn_frontdoor_profile_id = azurerm_cdn_frontdoor_profile.main_profile.id
@@ -114,6 +141,9 @@ resource "azurerm_cdn_frontdoor_security_policy" "main_security_policy" {
   }
 }
 
+############################################################
+# Resource: azurerm_dns_cname_record.subdomain
+############################################################
 resource "azurerm_dns_cname_record" "subdomain" {
   for_each = { for r in var.additional_custom_domains : r.name => r }
   name                = each.value.subdomain
@@ -144,6 +174,9 @@ resource "azurerm_dns_a_record" "apex_alias" {
 }
 
 
+############################################################
+# Resource: azurerm_monitor_diagnostic_setting.frontdoor_monitor
+############################################################
 resource "azurerm_monitor_diagnostic_setting" "frontdoor_monitor" {
   count = var.enable_diagnostics ? 1 : 0
 
