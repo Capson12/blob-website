@@ -22,16 +22,19 @@ variable "sku_size" {
 
 variable "repository_branch" {
     type = string
+    default = null
   
 }
 
 variable "repository_token" {
     type = string
+    default = null
   
 }
 
 variable "repository_url" {
     type = string
+    default = null
   
 }
 
