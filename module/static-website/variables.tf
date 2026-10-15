@@ -1,45 +1,25 @@
 variable "prefix" {
-    type = string
-    description = ""
-  
+  description = "Prefix used to construct the static web app name."
+  type        = string
 }
 
 variable "resource_group_name" {
-    type = string
-    description = ""
+  description = "Name of the resource group in which to create the static web app."
+  type        = string
 }
 
 variable "location" {
-    type = string
-    description = ""
-  
+  description = "Azure region in which to create the static web app."
+  type        = string
 }
 
 variable "sku_size" {
-    type = string
-  
-}
-
-variable "repository_branch" {
-    type = string
-    default = null
-  
-}
-
-variable "repository_token" {
-    type = string
-    default = null
-  
-}
-
-variable "repository_url" {
-    type = string
-    default = null
-  
+  description = "SKU size for the static web app."
+  type        = string
 }
 
 variable "tags" {
-  description = "A map of tags to assign to the resource group."
+  description = "Tags to assign to the static web app."
   type        = map(string)
   default     = {}
 }
